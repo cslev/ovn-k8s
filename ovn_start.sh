@@ -69,12 +69,12 @@ sudo ovs-vswitchd unix:$OVN_SOCKET_DIR/db.sock \
 echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Getting SYSTEM_ID from /sys/class/dmi/id/product_id...${none}"
-SYSTEM_ID=$(cat /sys/class/dmi/id/product_id)
+SYSTEM_ID=$(sudo cat /sys/class/dmi/id/product_uuid)
 echo -e "${green}[DONE]${none}"
 
 
 echo -e "${orange}Setting SYSTEM_ID in OVS DB...${none}"
-ovs-vsctl set Open_vSwitch . external_ids:system-id="${SYSTEM_ID}"
+sudo ovs-vsctl set Open_vSwitch . external_ids:system-id="${SYSTEM_ID}"
 echo -e "${green}[DONE]${none}"
 
 echo
@@ -110,7 +110,7 @@ sudo ovnkube -net-controller -loglevel=8 \
              -nb-address="tcp://${OVERLAY_IP}:6641" \
              -sb-address="tcp://${OVERLAY_IP}:6642" \
              -init-gateways \
-             -gateway-localnet
+             -gateway-localnet 2>&1 &
 
 echo -e "${green}[DONE]${none}"
 
