@@ -68,6 +68,14 @@ sudo ovs-vswitchd unix:$OVN_SOCKET_DIR/db.sock \
                   --detach
 echo -e "${green}[DONE]${none}"
 
+echo -e "${orange}Getting SYSTEM_ID from /sys/class/dmi/id/product_id...${none}"
+SYSTEM_ID=$(cat /sys/class/dmi/id/product_id)
+echo -e "${green}[DONE]${none}"
+
+
+echo -e "${orange}Setting SYSTEM_ID in OVS DB...${none}"
+ovs-vsctl set Open_vSwitch . external_ids:system-id="${SYSTEM_ID}"
+echo -e "${green}[DONE]${none}"
 
 echo
 echo -e "${orange}Starting ovn northd...${none}"
