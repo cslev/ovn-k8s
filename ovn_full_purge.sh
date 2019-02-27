@@ -9,7 +9,7 @@ sudo service kubelet stop
 echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Stopping docker containers...${none}"
-for i in $(docker ps -q)
+for i in $(sudo docker ps -q)
 do
   sudo docker stop $i
 done
@@ -17,7 +17,7 @@ echo -e "${green}[DONE]${none}"
 
 
 echo -e "${orange}Removing docker containers...${none}"
-for i in $(docker ps -a -q)
+for i in $(sudo docker ps -a -q)
 do
   sudo docker rm $i
 done
@@ -25,7 +25,7 @@ echo -e "${green}[DONE]${none}"
 
 
 echo -e "${orange}Removing docker images...${none}"
-for i in $(docker images -q)
+for i in $(sudo docker images -q)
 do
   sudo docker rmi $i
 done
@@ -72,6 +72,8 @@ sudo rm -rf /var/log/pods
 sleep 0.5
 echo -ne ". "
 sudo rm -rf /var/log/containers
+sleep 0.5
+sudo rm -rf /opt/cni/bin/
 sleep 0.5
 echo -e "${green}[DONE]${none}"
 
