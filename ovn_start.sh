@@ -96,6 +96,7 @@ sudo ovnkube -net-controller -loglevel=8 \
              -logfile="${OVN_LOG_DIR}/ovnkube.log" \
              -init-master=$NODE_NAME \
              -init-node=$NODE_NAME \
+             -cluster-subnet=$POD_IP_RANGE \
              -service-cluster-ip-range=$SERVICE_IP_RANGE \
              -nodeport \
              -nb-address="tcp://${OVERLAY_IP}:6641" \
