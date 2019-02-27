@@ -23,20 +23,6 @@ sudo service kubelet stop
 sudo service docker stop
 echo -e "${green}[DONE]${none}"
 
-echo -e "${orange}Recompile GO controller if needed...${none}"
-echo -ne "${orange}Checking existence of directory 'ovn-kubernetes'..."
-if [ -d ovn-kubernetes ]
-then
-  echo -e "${green}[EXISTS...skipping]${none}"
-else
-  echo -e "${yellow}ovn-kubernetes does not exists, installing...${none}"
-  git clone http://github.com/openvswitch/ovn-kubernetes
-  cd ovn-kubernetes/go-controller
-  make
-  sudo make install
-  cd ../../
-fi
-
 
 
 echo -ne "${orange}Starting DOCKER service...${none}"
