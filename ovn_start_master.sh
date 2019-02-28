@@ -37,7 +37,7 @@ sudo ovsdb-server --detach --monitor -vconsole:off \
              --remote=punix:$OVN_SOCKET_DIR/ovnnb_db.sock \
              --pidfile=$OVN_PID_DIR/ovnnb_db.pid \
              --remote=db:OVN_Northbound,NB_Global,connections \
-             --remote=ptcp:6641:$OVERLAY_IP \
+             --remote=ptcp:6641:$CENTRAL_IP \
              --unixctl=ovnnb_db.ctl \
              --private-key=db:OVN_Northbound,SSL,private_key \
              --certificate=db:OVN_Northbound,SSL,certificate \
@@ -51,7 +51,7 @@ sudo ovsdb-server --detach --monitor -vconsole:off \
              --remote=punix:$OVN_SOCKET_DIR/ovnsb_db.sock \
              --pidfile=$OVN_PID_DIR/ovnsb_db.pid \
              --remote=db:OVN_Southbound,SB_Global,connections \
-             --remote=ptcp:6642:$OVERLAY_IP \
+             --remote=ptcp:6642:$CENTRAL_IP \
              --unixctl=ovnsb_db.ctl \
              --private-key=db:OVN_Southbound,SSL,private_key \
              --certificate=db:OVN_Southbound,SSL,certificate \
@@ -98,7 +98,7 @@ echo $TOKEN > token
 
 echo -e "${orange}Starting OVNKUBE...${none}"
 sudo ovnkube -net-controller -loglevel=8 \
-             -k8s-apiserver="https://$OVERLAY_IP:6443" \
+             -k8s-apiserver="https://$CENTRAL_IP:6443" \
              -k8s-cacert=/etc/kubernetes/pki/ca.crt \
              -k8s-token="$TOKEN" \
              -logfile="${OVN_LOG_DIR}/ovnkube.log" \
@@ -107,8 +107,8 @@ sudo ovnkube -net-controller -loglevel=8 \
              -cluster-subnet=$POD_IP_RANGE \
              -service-cluster-ip-range=$SERVICE_IP_RANGE \
              -nodeport \
-             -nb-address="tcp://${OVERLAY_IP}:6641" \
-             -sb-address="tcp://${OVERLAY_IP}:6642" \
+             -nb-address="tcp://${CENTRAL_IP}:6641" \
+             -sb-address="tcp://${CENTRAL_IP}:6642" \
              -init-gateways \
              -gateway-localnet 2>&1 &
 
