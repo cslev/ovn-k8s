@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ovn_config_master.sh
+source ovn_config.sh
+source master_args.sh
 
 echo -ne "${orange}Create necessary directories if not exist...${none}"
 sudo mkdir -p $OVN_PID_DIR

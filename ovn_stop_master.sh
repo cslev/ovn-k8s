@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ovn_config_master.sh
+source ovn_config.sh
+source master_args.sh
 
 echo -ne "${orange}Stopping processes and deleting directories...${none}"
 sudo pkill ovs-vswitchd

@@ -2,7 +2,7 @@
 
 source ovn_config.sh
 
-./ovn_stop.sh
+./ovn_stop_master.sh
 
 echo -e "${orange}Stopping kubelet service...${none}"
 sudo service kubelet stop
