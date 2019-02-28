@@ -2,6 +2,8 @@
 
 source ovn_config.sh
 
+sudo echo
+
 echo -e "${orange}Installing golang...${none}"
 if [ -f go1.11.1.linux-amd64.tar.gz ]
 then
@@ -10,6 +12,7 @@ else
   wget https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz
 fi
 sudo tar -C /usr/local -xzf go1.11.1.linux-amd64.tar.gz
+sudo tar -xzf go1.11.1.linux-amd64.tar.gz
 echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Installing CNI...${none}"
@@ -27,10 +30,10 @@ sudo tar -xvzf ~/cni-amd64-v0.6.0.tgz
 popd
 sudo mkdir -p /etc/cni/net.d
 # Create a 99loopback.conf to have atleast one CNI config.
-echo "{
+sudo echo "{
     "cniVersion": "0.2.0",
     "type": "loopback"
-}" > /etc/cni/net.d/99loopback.conf
+}" | sudo tee /etc/cni/net.d/99loopback.conf
 echo -e "${green}[DONE]${none}"
 
 
@@ -38,11 +41,11 @@ echo -e "${orange}Adding docker and kubernetes sources to sources.list...${none}
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates
 sudo rm -rf /etc/apt/sources.list.d/kubernetes.list
-sudo echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+sudo echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 sudo rm -rf /etc/apt/sources.list.d/docker.list
-sudo su -c "echo \"deb https://apt.dockerproject.org/repo ubuntu-xenial main\" > /etc/apt/sources.list.d/docker.list"
+sudo echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" |sudo tee /etc/apt/sources.list.d/docker.list
 sudo apt-get update
 echo -e "${green}[DONE]${none}"
 
