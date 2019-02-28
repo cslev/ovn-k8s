@@ -3,7 +3,7 @@
 #this script initializes the kubernetes and docker background for OVN-KUBERNETES
 
 
-source ovn_config.sh
+source ovn_config_master.sh
 
 sudo echo
 
