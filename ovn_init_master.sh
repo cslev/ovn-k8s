@@ -31,7 +31,7 @@ echo -e "${green}[DONE]${none}"
 
 
 #echo -ne "${orange}Starting KUBELET service...${none}"
-#sudo service kubelet start
+sudo service kubelet restart
 #echo -e "${green}[DONE]${none}"
 
 
