@@ -112,9 +112,12 @@ sudo ovnkube -net-controller -loglevel=8 \
              -sb-address="tcp://${CENTRAL_IP}:6642" \
              -init-gateways \
              -gateway-localnet 2>&1 &
-
+sleep 2
 echo -e "${green}[DONE]${none}"
-
-
 echo -e "${green} --- FINISHED --- ${none}"
+
+echo -e "${green}Freshesh output log of ovnkube:${none}"
+
+cat $OVN_LOG_DIR/ovnkube.log
+
 echo
