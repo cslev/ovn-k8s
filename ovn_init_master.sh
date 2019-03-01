@@ -69,7 +69,7 @@ done
 echo -e "${green}Kube-apiserver is UP!${none}"
 
 
-echo -ne "${orange}Let master run pods too${none}"
+echo -e "${orange}Let master run pods too${none}"
 kubectl taint nodes --all node-role.kubernetes.io/master-
 echo -e "${green}[DONE]${none}"
 
