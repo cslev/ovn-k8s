@@ -38,7 +38,7 @@ echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Adding docker and kubernetes sources to sources.list...${none}"
 sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates
+sudo apt-get install -y apt-transport-https ca-certificates uuid
 sudo rm -rf /etc/apt/sources.list.d/kubernetes.list
 sudo echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
