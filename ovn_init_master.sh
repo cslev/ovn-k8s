@@ -16,7 +16,7 @@ sudo rm -rf /var/lib/etcd
 sudo rm -rf /etc/kubernetes/manifests/*
 sudo rm -rf $HOME/.kube
 sudo rm -rf /var/log/openvswitch/ovnkube.log
-sudo rm -rf /etc/kubernetes/*
+sudo rm -rf /etc/kubernetes
 
 
 sudo service kubelet stop
@@ -30,9 +30,9 @@ sudo service docker start
 echo -e "${green}[DONE]${none}"
 
 
-#echo -ne "${orange}Starting KUBELET service...${none}"
+echo -ne "${orange}Starting KUBELET service...${none}"
 sudo service kubelet restart
-#echo -e "${green}[DONE]${none}"
+echo -e "${green}[DONE]${none}"
 
 
 echo -ne "${orange}Disabling swap...${none}"
