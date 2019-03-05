@@ -7,22 +7,18 @@ source ovn_config.sh
 
 sudo echo
 
-echo -ne "${orange}Cleaning previous attempts' gargabe...${none}"
-sudo pkill etcd
-sudo pkill kube-apiserver
-sudo pkill kube-controller-manager
-sudo pkill kube-scheduler
-sudo rm -rf /var/lib/etcd
-sudo rm -rf /etc/kubernetes/manifests/*
-sudo rm -rf $HOME/.kube
-sudo rm -rf /var/log/openvswitch/ovnkube.log
-sudo rm -rf /etc/kubernetes
 
 
-sudo service kubelet stop
-sudo service docker stop
+./kill_kubernetes.sh
+echo -ne "${orange}Removing previous attempts' garbage..."
+rm -rf /etc/kubernetes/manifests/*
+rm -rf /var/lib/etcd
+rm -rf /root/.kube/config
 echo -e "${green}[DONE]${none}"
 
+echo -ne "${orange}Stopping KUBELET service...${none}"
+sudo service kubelet stop
+echo -e "${green}[DONE]${none}"
 
 
 echo -ne "${orange}Starting DOCKER service...${none}"
@@ -30,18 +26,14 @@ sudo service docker start
 echo -e "${green}[DONE]${none}"
 
 
-echo -ne "${orange}Starting KUBELET service...${none}"
-sudo service kubelet restart
-echo -e "${green}[DONE]${none}"
-
 
 echo -ne "${orange}Disabling swap...${none}"
 sudo swapoff -a
 echo -e "${green}[DONE]${none}"
 
-echo -e "${orange}Pull kubernetes images...${none}"
-sudo kubeadm config images pull
-echo -e "${green}[DONE]${none}"
+#echo -e "${orange}Pull kubernetes images...${none}"
+#sudo kubeadm config images pull
+#echo -e "${green}[DONE]${none}"
 
 
 echo -e "${orange}Initializing kubernetes pod...${none}"

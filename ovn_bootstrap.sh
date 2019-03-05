@@ -15,7 +15,7 @@ sudo tar -xzf go1.11.1.linux-amd64.tar.gz
 echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Installing CNI...${none}"
-pushd ~/
+pushd $(pwd)
 if [ -f cni-amd64-v0.6.0.tgz ]
 then
     echo -e "${green}Compressed archive of cni0.6.0 is already downloaded...${none}"
@@ -58,6 +58,10 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo service kubelet restart
 echo -e "${green}[DONE]${none}"
 
+echo -e "${orange}Pull kubernetes images...${none}"
+sudo kubeadm config images pull
+echo -e "${green}[DONE]${none}"
+
 
 echo -e "${orange}Compile GO controller if needed...${none}"
 echo -ne "${orange}Checking existence of directory 'ovn-kubernetes'..."
@@ -73,6 +77,8 @@ else
   cd ../../
 fi
 echo -e "${green}[DONE]${none}"
+
+
 
 sudo apt-get clean
 
