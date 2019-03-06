@@ -3,6 +3,22 @@ source ovn_config.sh
 
 sudo echo
 
+echo -e "${orange}Install openvswitch requirements..."
+sudo apt-get install -y gcc g++ libclang-6.0-dev libclang-common-6.0-dev libssl-dev wget tar bzip2 \
+                        libssl1.0.0 \
+                        libssl1.1 \
+                        libcap-ng-dev \
+                        libcapnp-dev \
+                        libcap-ng-utils \
+                        libcap-ng0 \
+                        python python-cap-ng python-six python2.7 python-pyftpdlib python-tftpy \
+                        autoconf automake autotools-dev \
+                        libtool \
+                        netcat \
+                        curl
+echo -e "${green}[DONE]${none}"
+
+
 echo -e "${orange}Installing golang...${none}"
 if [ -f go1.11.1.linux-amd64.tar.gz ]
 then
