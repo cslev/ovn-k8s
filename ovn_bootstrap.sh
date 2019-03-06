@@ -31,7 +31,9 @@ sudo tar -xzf go1.11.1.linux-amd64.tar.gz
 echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Installing CNI...${none}"
-pushd $(pwd)
+
+CNI_PATH=$(pwd)
+pushd $CNI_PATH
 if [ -f cni-amd64-v0.6.0.tgz ]
 then
     echo -e "${green}Compressed archive of cni0.6.0 is already downloaded...${none}"
@@ -41,7 +43,7 @@ fi
 
 sudo mkdir -p /opt/cni/bin
 pushd /opt/cni/bin
-sudo tar -xvzf ~/cni-amd64-v0.6.0.tgz
+sudo tar -xvzf $CNI_PATH/cni-amd64-v0.6.0.tgz
 popd
 sudo mkdir -p /etc/cni/net.d
 # Create a 99loopback.conf to have atleast one CNI config.
