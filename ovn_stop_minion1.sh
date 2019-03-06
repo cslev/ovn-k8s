@@ -15,5 +15,9 @@ sudo rm -rf $OVN_DB_FILE_DIR
 sudo rm -rf $OVN_LOG_DIR
 sudo rm -rf $OVN_SOCKET_DIR
 sudo rm -rf /var/run/openvswitch/
-ovs-dpctl del-dp ovs-system
+t=$(sudo ovs-dpctl show)
+if [[ ! -z "$t" ]]
+then
+  sudo ovs-dpctl del-dp ovs-system
+fi
 echo -e "${green}[DONE]${none}"

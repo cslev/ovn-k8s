@@ -13,7 +13,7 @@ sudo echo
 echo -ne "${orange}Removing previous attempts' garbage..."
 rm -rf /etc/kubernetes/manifests/*
 rm -rf /var/lib/etcd
-rm -rf /root/.kube/config
+rm -rf $HOME/.kube/config
 echo -e "${green}[DONE]${none}"
 
 echo -ne "${orange}Stopping KUBELET service...${none}"
