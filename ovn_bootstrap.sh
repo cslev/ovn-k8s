@@ -98,15 +98,38 @@ echo -e "${green}[DONE]${none}"
 
 sudo apt-get clean
 
-echo -e "${bold}${yellow}Install openvswitch from source with kernel modules${none}"
-echo -e "Hints:"
-echo -e "${orange}wget https://www.openvswitch.org/releases/openvswitch-2.10.1.tar.gz${none}"
-echo -e "${orange}tar -xzvf openvswitch-2.10.1.tar.gz${none}"
-echo -e "${orange}cd openvswitch-2.10.1${none}"
-echo -e "${orange}./configure --with-linux=/lib/modules/$(uname -r)/build${none}"
-echo -e "${orange}make${none}"
-echo -e "${orange}sudo make install${none}"
-echo -e "${orange}sudo make modules_install${none}"
+echo -e "${orange}Installing openvswitch from source with kernel modules...${none}"
+echo -e "${orange}Getting openvswitch 2.10.1...${none}"
+sudo wget https://www.openvswitch.org/releases/openvswitch-2.10.1.tar.gz
+sudo -e "${green}[DONE]${none}"
+
+echo -e "${orange}Extracting and compiling...${none}"
+sudo tar -xzf openvswitch-2.10.1.tar.gz
+pushd $(pwd)
+pushd openvswitch-2.10.1
+./configure --with-linux=/lib/modules/$(uname -r)/build
+make -j
+echo -e "${green}[DONE]${none}"
+
+echo -e "${orange}Installing binaries..."
+sudo make install
+echo -e "${green}[DONE]${none}"
+
+echo -e "${orange}Create self-signing keys for installing kernel modules${none}"
+sudo openssl req -new -x509 -sha512 -newkey rsa:4096 -nodes -keyout key.pem -days 36500 -out certificate.pem
+sudo cp key.pem /usr/src/linux-headers-$(uname -r)/certs/signing_key.pem
+sudo cp certificate.pem /usr/src/linux-headers-$(uname -r)/certs/signing_key.x509
+echo -e "${green}[DONE]${none}"
+
+
+echo -e "${orange}Installing kernel modules...${none}"
+sudo make modules_install
+echo -e "${green}[DONE]${none}"
+
+echo -en "${orange}Inserting module...${none}"
+sudo modprobe openvswitch
+echo -e "${green}[DONE]${none}"
+
 echo -e "${green} ---- FINISHED ---- ${none}"
 
 
