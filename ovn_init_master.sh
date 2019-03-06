@@ -11,9 +11,9 @@ sudo echo
 
 ./kill_kubernetes.sh
 echo -ne "${orange}Removing previous attempts' garbage..."
-rm -rf /etc/kubernetes/manifests/*
-rm -rf /var/lib/etcd
-rm -rf $HOME/.kube/config
+sudo rm -rf /etc/kubernetes/manifests/*
+sudo rm -rf /var/lib/etcd
+sudo rm -rf $HOME/.kube/config
 echo -e "${green}[DONE]${none}"
 
 echo -ne "${orange}Stopping KUBELET service...${none}"
