@@ -4,6 +4,7 @@ source ovn_config.sh
 sudo echo
 
 echo -e "${orange}Install openvswitch requirements...${none}"
+sudo apt-get update
 sudo apt-get install -y gcc g++ libclang-6.0-dev libclang-common-6.0-dev libssl-dev wget tar bzip2 \
                         libssl1.0.0 \
                         libssl1.1 \
