@@ -7,7 +7,11 @@ source ovn_config.sh
 
 sudo echo
 
-
+echo -e "${orange}Setting up hostname and hosts aliases...${orange}"
+sudo echo "127.0.0.1   ${NODE_NAME}  localhost" | sudo tee /etc/hosts
+sudo echo "${CENTRAL_IP}  ${NODE_NAME}" | sudo tee -a /etc/hosts
+sudo echo $NODE_NAME | sudo tee /etc/hostname
+sudo hostname -F /etc/hostname
 
 ./kill_kubernetes.sh
 echo -ne "${orange}Removing previous attempts' garbage..."

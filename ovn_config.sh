@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GOPATH=$HOME/ovn-k8s/
+GOPATH=/usr/local/
 PATH=$PATH:$GOPATH/go/bin/
 PATH=$PATH:/usr/local/share/openvswitch/scripts
 

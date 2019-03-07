@@ -4,6 +4,12 @@ source ovn_config.sh
 
 ./ovn_stop_master.sh
 
+cd ovn-kubernetes/go-controller/
+make clean
+cd ../../
+rm -rf ovn-kubernetes
+
+
 echo -e "${orange}Stopping kubelet service...${none}"
 sudo service kubelet stop
 echo -e "${green}[DONE]${none}"
