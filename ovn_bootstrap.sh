@@ -141,17 +141,18 @@ if [ -f openvswitch-2.10.1.tar.gz ]
 then
   echo -e "${orange}openvswitch-2.10.1.tar.gz already downloaded...${none}"
 else
-  sudo wget https://www.openvswitch.org/releases/openvswitch-2.10.1.tar.gz
+  wget https://www.openvswitch.org/releases/openvswitch-2.10.1.tar.gz
   retval=$?
   check_retval $retval
 fi
 
 echo -e "${orange}Extracting and configuring Open vSwitch...${none}"
-sudo tar -xzf openvswitch-2.10.1.tar.gz
+tar -xzf openvswitch-2.10.1.tar.gz
 retval=$?
 check_retval $retval
+
 pushd $(pwd)
-pushd openvswitch-2.10.1
+pushd openvswitch-2.10.1/
 ./configure --with-linux=/lib/modules/$(uname -r)/build
 
 echo -e "${orange}Compiling Open vSwitch...${none}"
@@ -188,8 +189,8 @@ check_retval $retval
 echo -e "${green} ---- FINISHED ---- ${none}"
 echo -e "${bold}${yellow}\n" \
         "----====== ATTENTION ======----"
-echo -e "DO NOT forget to set OVERLAY_IP \n" \
-        "variable to your local IP in \n" \
+echo -e "DO NOT forget to set OVERLAY_IP and \n" \
+        "CENTRAL_IP variable to your local IP in \n" \
 	"${underline}master_args.sh${bold} and" \
         "${underline}minion_args.sh${bold}, respectively!\n" \
         "----=======================----${none}"
