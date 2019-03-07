@@ -186,6 +186,12 @@ retval=$?
 check_retval $retval
 
 echo -e "${green} ---- FINISHED ---- ${none}"
-
+echo -e "${bold}${yellow}\n" \
+        "----====== ATTENTION ======----"
+echo -e "DO NOT forget to set OVERLAY_IP \n" \
+        "variable to your local IP in \n" \
+	"${underline}master_args.sh${bold} and" \
+        "${underline}minion_args.sh${bold}, respectively!\n" \
+        "----=======================----${none}"
 
 
