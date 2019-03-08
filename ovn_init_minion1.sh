@@ -24,7 +24,6 @@ sudo rm -rf $HOME/.kube
 sudo rm -rf /etc/kubernetes/kubelet.conf
 sudo rm -rf /etc/kubernetes/bootstrap-kubelet.conf
 sudo rm -rf /etc/kubernetes/pki/ca.crt
-
 echo -e "${green}[DONE]${none}"
 
 echo -ne "${orange}Stopping KUBELET service...${none}"
@@ -47,12 +46,38 @@ sudo swapoff -a
 echo -e "${green}[DONE]${none}"
 
 
-echo -e "${yellow}---------------------------------------------------------${none}"
-echo -e "${yellow}Connect to kubernetes master via the kubeadm join command${none}"
-echo -e "${bold}On the master node check the content of kubeadm.log file and "\
-        "issue that command here!${none}"
-echo -e "${yellow}${bold}DO NOT forget to have the token as well from the master node!!!${none}"
-echo -e "${orange}---------------------------------------------------------${none}"
+echo -ne "${yellow}Waiting for the k8s-master to come up . . ."
+retval=1
+while [ $retval -ne 0 ]
+do
+  sudo scp -o StrictHostKeyChecking=no k8s-master:/users/cslev/ovn-k8s/kubeadm.log ./ &> /dev/null
+  retval=$?
+  echo -ne ". "
+  sleep 1s
+done
+echo
+
+echo -e "${green}kubeadm join command is ready${none}"
+
+echo -ne "${yellow}Waiting for the k8s-master to share the token . . ."
+retval=1
+while [ $retval -ne 0 ]
+do
+  sudo scp -o StrictHostKeyChecking=no k8s-master:/users/cslev/ovn-k8s/token ./ &> /dev/null
+  retval=$?
+  echo -ne ". "
+  sleep 1s
+done
+echo
+
+echo -e "${green}------- ALL FINISHED -----"
+
+#echo -e "${yellow}---------------------------------------------------------${none}"
+#echo -e "${yellow}Connect to kubernetes master via the kubeadm join command${none}"
+#echo -e "${bold}On the master node check the content of kubeadm.log file and "\
+#        "issue that command here!${none}"
+#echo -e "${yellow}${bold}DO NOT forget to have the token as well from the master node!!!${none}"
+#echo -e "${orange}---------------------------------------------------------${none}"
 
 
 
