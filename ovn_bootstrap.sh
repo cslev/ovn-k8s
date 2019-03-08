@@ -189,10 +189,11 @@ check_retval $retval
 echo -e "${green} ---- FINISHED ---- ${none}"
 echo -e "${yellow}\n" \
         "----====== ATTENTION ======----"
-echo -e "DO NOT forget to set OVERLAY_IP and \n" \
+echo -e "DO NOT forget to update OVERLAY_IP and \n" \
         "CENTRAL_IP variable to your local IP in \n" \
 	"${bold}master_args.sh${none}${yellow} and" \
-        "${bold}minion_args.sh${none}${yellow}, respectively!\n" \
+        "${bold}minion_args.sh${none}${yellow}, respectively,\n" \
+        "if they are not 10.10.0.11 and 10.10.0.12-13!"
         "----=======================----${none}"
 
 
