@@ -9,7 +9,7 @@ In order to make it for your own environment, you need to have 3 (virtual) machi
 Your machines should be accessible all the time via another interface/IP address in order to avoid keeping ourselves out from the machines after a certain point.
 
 Do the following steps on the machines
-### '@'master node:
+### @master node:
 The following commands shoud be executed:
 ```
 $ git clone https://github.com/cslev/ovn-k8s
@@ -34,7 +34,7 @@ The above command will also produce a kubeadm join command for the workers, as w
 In order to make them available for the minions, the IP addresses mentioned above should be set properly, and SSH keys NEEDS to be exchanged between the master and the worker nodes, since the worker nodes will download (via `scp`) the required files from the master!
 If the connection is not set properly, the worker nodes could not be initialized.
 
-### '@'worker node(s):
+### @worker node(s):
 The following commands should be executed:
 ```
 $ cd /
@@ -61,14 +61,14 @@ sudo ./minion/ovn_start_minion.sh $MINION_ID /ovn-k8s
 ```
 
 ## DIY mode (lazy)
-### '@'master node:
+### @master node:
 $ cd /
 $ sudo git clone https://github.com/cslev/ovn-k8s
 $ sudo cd ovn-k8s
 $ sudo ./master.sh /ovn-k8s
 ```
 
-### '@'worker node(s):
+### @worker node(s):
 ```
 $ cd /
 $ sudo git clone https://github.com/cslev/ovn-k8s
