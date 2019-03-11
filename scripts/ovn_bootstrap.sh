@@ -16,7 +16,7 @@ then
 fi
 
 
-source $MAIN_DIR/ovn_config.sh
+source $MAIN_DIR/scripts/ovn_config.sh
 
 
 check_retval ()

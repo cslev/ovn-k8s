@@ -14,10 +14,10 @@ then
   exit -1
 fi
 
-source $MAIN_DIR/ovn_config.sh
+source $MAIN_DIR/scripts/ovn_config.sh
 
 cd $MAIN_DIR
-./ovn_stop.sh
+./scripts/ovn_stop.sh
 
 sudo pushd ovn-kubernetes/go-controller/
 sudo make clean

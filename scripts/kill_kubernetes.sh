@@ -14,7 +14,7 @@ then
   exit -1
 fi
 
-source $MAIN_DIR/ovn_config.sh
+source $MAIN_DIR/scripts/ovn_config.sh
 
 echo -ne "${orange}Stopping processes...${none}"
 sudo pkill etcd
