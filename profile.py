@@ -5,25 +5,8 @@ Levi: Three pure Ubuntu 18.04 connected via LAN. One of them is the OVN k8s-mast
 """
 kube_instruction= \
 """
-@master:
-- git clone https://github.com/cslev/ovn-k8s
-- cd ovn-k8s
-- IP addresses needs to be set in master_args.sh (manually?)
-- ./master_args.sh #to set the ENV variables for the running shell
-- ./ovn_bootstrap.sh #will install all necessary components, including openvswitch 2.10.1 installation from source (check outputs for failures!)
-- ./ovn_init_master.sh #will initialize the kubernetes cluster via kubeadm init (also cleans previous attempts' garbage, and sets the hostname, /etc/hosts properly)
-- ./ovn_start_master.sh #will practically start ovnkube itself with all its components
-
-@worker node:
-- git clone https://github.com/cslev/ovn-k8s
-- cd ovn-k8s
-- IP addresses needs to be set in minion1_args.sh (manually?)
-- ./minion1_args.sh #to set the ENV variables for the running shell
-- ./ovn_bootstrap.sh #will install all necessary components, including openvswitch 2.10.1 installation from source (check outputs for failures!)
-- ./ovn_init_minion.sh #basic initailization
-Then, according to the kubeadm join command the master has generated (stored in kubeadm.log at master) needs to be called from the worker node
-The master also created a token (stored in file token at master). We need to copy that file to the worker node's ovn-k8s/ directory
-- ./ovn_start_minion.sh #will start ovnkube on the worker node and connects it to the master
+Check the following github repo for more information
+https://github.com/cslev/ovn-k8s
 
 """
 
