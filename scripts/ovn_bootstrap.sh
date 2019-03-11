@@ -4,13 +4,14 @@ MAIN_DIR=$1
 
 if [ -z "$MAIN_DIR"  ]
 then
-  MAIN_DIR="/ovn-k8s"
+  MAIN_DIR=$(pwd)
 fi
 
-if [ -d $MAIN_DIR ]
+#if MAIN_DIR was set but it does not exist!
+if [[ ! -d $MAIN_DIR ]]
 then
-  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
-          "where you have downloaded the git repository ovn-k8s"
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first" \
+          "argument where you have downloaded the git repository ovn-k8s!"
   exit -1
 fi
 

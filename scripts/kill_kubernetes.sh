@@ -1,13 +1,20 @@
 #!/bin/bash
+MAIN_DIR=$1
 
-source ovn_config.sh
-retval=$?
-if [ $retval -ne 0 ]
+if [ -z "$MAIN_DIR"  ]
 then
-  echo -e "Cannot include ovn_config.sh - maybe it is sourced from a wrong place!"
+  MAIN_DIR=$(pwd)
+fi
+
+#if MAIN_DIR was set but it does not exist!
+if [[ ! -d $MAIN_DIR ]]
+then
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first" \
+          "argument where you have downloaded the git repository ovn-k8s!"
   exit -1
 fi
 
+source $MAIN_DIR/ovn_config.sh
 
 echo -ne "${orange}Stopping processes...${none}"
 sudo pkill etcd
