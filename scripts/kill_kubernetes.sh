@@ -1,6 +1,13 @@
 #!/bin/bash
 
 source ovn_config.sh
+retval=$?
+if [ $retval -ne 0 ]
+then
+  echo -e "Cannot include ovn_config.sh - maybe it is sourced from a wrong place!"
+  exit -1
+fi
+
 
 echo -ne "${orange}Stopping processes...${none}"
 sudo pkill etcd

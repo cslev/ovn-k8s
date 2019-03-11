@@ -1,35 +1,66 @@
 #!/bin/bash
-source ovn_config.sh
-retval=$?
-if [ $retval -ne 0 ]
+
+MAIN_DIR=$1
+
+if [ -z "$MAIN_DIR"  ]
 then
-  echo -e "Cannot include ovn_config.sh - maybe it is sourced from a wrong place!"
+  MAIN_DIR="/ovn-k8s"
+fi
+
+if [ -d $MAIN_DIR ]
+then
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
+          "where you have downloaded the git repository ovn-k8s"
   exit -1
 fi
 
-source master_args.sh
-retval=$?
-if [ $retval -ne 0 ]
-then
-  echo -e "Cannot include master_args.sh - maybe it is sourced from a wrong place!"
-  exit -1
-fi
 
+source $MAIN_DIR/ovn_config.sh
+
+
+check_retval ()
+{
+  retval=$1
+  if [ $retval -ne 0 ]
+  then
+    echo -e "${bold}${red}Something went wrong during the installation process..."
+    echo -e "EXITING${none}"
+    exit -1
+  else
+    echo -e "${green}[DONE]${none}"
+  fi
+
+}
 
 sudo echo
+
 
 echo -e "${orange}Install openvswitch requirements...${none}"
 sudo apt-get update
 
-sudo apt-get install -y gcc g++ libclang-6.0-dev libclang-common-6.0-dev libssl-dev wget tar bzip2 \
+sudo apt-get install -y gcc \
+                        g++ \
+                        libclang-6.0-dev \
+                        libclang-common-6.0-dev \
+                        libssl-dev \
+                        wget \
+                        tar \
+                        bzip2 \
                         libssl1.0.0 \
                         libssl1.1 \
                         libcap-ng-dev \
                         libcapnp-dev \
                         libcap-ng-utils \
                         libcap-ng0 \
-                        python python-cap-ng python-six python2.7 python-pyftpdlib python-tftpy \
-                        autoconf automake autotools-dev \
+                        python \
+                        python-cap-ng \
+                        python-six \
+                        python2.7 \
+                        python-pyftpdlib \
+                        python-tftpy \
+                        autoconf \
+                        automake \
+                        autotools-dev \
                         libtool \
                         netcat \
                         curl
@@ -42,29 +73,27 @@ if [ -f go1.11.1.linux-amd64.tar.gz ]
 then
   echo -e "${green}Compressed archive of go1.11.1 is already downloaded...${none}"
 else
-  wget https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz
+  wget https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz -O $MAIN_DIR/go1.11.1.linux-amd64.tar.gz
   retval=$?
   check_retval $retval
 fi
-sudo tar -C $GOPATH -xzf go1.11.1.linux-amd64.tar.gz
+sudo tar -C $GOPATH -xzf $MAIN_DIR/go1.11.1.linux-amd64.tar.gz
 retval=$?
 check_retval $retval
 
 echo -e "${orange}Installing CNI...${none}"
-CNI_PATH=$(pwd)
-pushd $CNI_PATH
 if [ -f cni-amd64-v0.6.0.tgz ]
 then
     echo -e "${green}Compressed archive of cni0.6.0 is already downloaded...${none}"
 else
-    wget https://github.com/containernetworking/cni/releases/download/v0.6.0/cni-amd64-v0.6.0.tgz
+    wget https://github.com/containernetworking/cni/releases/download/v0.6.0/cni-amd64-v0.6.0.tgz -O $MAIN_DIR/cni-amd64-v0.6.0.tgz
     retval=$?
     check_retval $retval
 fi
 
 sudo mkdir -p /opt/cni/bin
 pushd /opt/cni/bin
-sudo tar -xvzf $CNI_PATH/cni-amd64-v0.6.0.tgz
+sudo tar -xvzf $MAIN_DIR/cni-amd64-v0.6.0.tgz
 popd
 sudo mkdir -p /etc/cni/net.d
 # Create a 99loopback.conf to have atleast one CNI config.
@@ -73,6 +102,8 @@ sudo echo "{
     "type": "loopback"
 }" | sudo tee /etc/cni/net.d/99loopback.conf
 echo -e "${green}[DONE]${none}"
+
+
 
 echo -ne "${orange}Create initramfs for the running kernel...${none}"
 sudo update-initramfs -c -k $(uname -r)
@@ -108,13 +139,14 @@ echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Compile GO controller if needed...${none}"
 echo -ne "${orange}Checking existence of directory 'ovn-kubernetes'..."
+cd $MAIN_DIR
 if [ -d ./ovn-kubernetes ]
 then
   echo -e "${green}[EXISTS...skipping]${none}"
 else
   echo -e "${orange}ovn-kubernetes does not exists, installing...${none}"
   git clone http://github.com/openvswitch/ovn-kubernetes
-  cd ovn-kubernetes/go-controller
+  cd $MAIN_DIR/ovn-kubernetes/go-controller
   echo -e "${orange}Compiling...${none}"
   make
   retval=$?
@@ -125,7 +157,7 @@ else
   retval=$?
   check_retval $retval
 
-  cd ../../
+  cd $MAIN_DIR
 fi
 
 
@@ -139,17 +171,17 @@ if [ -f openvswitch-2.10.1.tar.gz ]
 then
   echo -e "${orange}openvswitch-2.10.1.tar.gz already downloaded...${none}"
 else
-  wget https://www.openvswitch.org/releases/openvswitch-2.10.1.tar.gz
+  wget https://www.openvswitch.org/releases/openvswitch-2.10.1.tar.gz -O $MAIN_DIR/openvswitch-2.10.1.tar.gz
   retval=$?
   check_retval $retval
 fi
 
 echo -e "${orange}Extracting and configuring Open vSwitch...${none}"
+cd $MAIN_DIR
 tar -xzf openvswitch-2.10.1.tar.gz
 retval=$?
 check_retval $retval
 
-pushd $(pwd)
 pushd openvswitch-2.10.1/
 ./configure --with-linux=/lib/modules/$(uname -r)/build
 
@@ -183,6 +215,8 @@ echo -en "${orange}Inserting module...${none}"
 sudo modprobe openvswitch
 retval=$?
 check_retval $retval
+
+sudo popd
 
 echo -e "${green} ---- FINISHED ---- ${none}"
 echo -e "${yellow}\n" \

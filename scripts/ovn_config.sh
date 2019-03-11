@@ -1,6 +1,7 @@
 #!/bin/bash
 
 GOPATH=/usr/local/
+sudo mkdir -p /usr/local
 PATH=$PATH:$GOPATH/go/bin/
 PATH=$PATH:/usr/local/share/openvswitch/scripts
 
@@ -38,3 +39,17 @@ lightblue='\033[94m'
 pink='\033[95m'
 lightcyan='\033[96m'
 
+
+check_retval ()
+{
+  retval=$1
+  if [ $retval -ne 0 ]
+  then
+    echo -e "${bold}${red}Something went wrong during the installation process..."
+    echo -e "EXITING${none}"
+    exit -1
+  else
+    echo -e "${green}[DONE]${none}"
+  fi
+
+}

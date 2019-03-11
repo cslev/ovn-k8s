@@ -1,7 +1,22 @@
 #!/bin/bash
 
-source ovn_config.sh
-source minion2_args.sh
+MAIN_DIR=$1
+
+if [ -z "$MAIN_DIR"  ]
+then
+  MAIN_DIR="/ovn-k8s/"
+fi
+
+if [ -d $MAIN_DIR ]
+then
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
+          "where you have downloaded the git repository ovn-k8s"
+  exit -1
+fi
+
+source $MAIN_DIR/scripts/ovn_config.sh
+source $MAIN_DIR/scripts/master/minion1_args.sh
+
 
 echo -ne "${orange}Create necessary directories if not exist...${none}"
 sudo mkdir -p $OVN_PID_DIR
@@ -40,7 +55,7 @@ echo -e "${orange}Setting SYSTEM_ID in OVS DB...${none}"
 sudo ovs-vsctl set Open_vSwitch . external_ids:system-id="${SYSTEM_ID}"
 echo -e "${green}[DONE]${none}"
 
-TOKEN=$(cat token)
+TOKEN=$(cat $MAIN_DIR/token)
 if [ -z "$TOKEN" ]
 then
   echo -e "${red}variable TOKEN does not exists! Get token of ovnkube from server and save as a text file called 'token' here!${none}"
@@ -100,4 +115,3 @@ else
   echo -e "${green}Check the status of k8s-minion node at k8s-master via kubectl get nodes!${none}"
 
 fi
-

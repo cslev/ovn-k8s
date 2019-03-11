@@ -1,9 +1,23 @@
 #!/bin/bash
 
 #this script initializes the kubernetes and docker background for OVN-KUBERNETES
+MAIN_DIR=$1
 
-source master_args.sh
-source ovn_config.sh
+if [ -z "$MAIN_DIR"  ]
+then
+  MAIN_DIR="/ovn-k8s/"
+fi
+
+if [ -d $MAIN_DIR ]
+then
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
+          "where you have downloaded the git repository ovn-k8s"
+  exit -1
+fi
+
+source $MAIN_DIR/scripts/ovn_config.sh
+source $MAIN_DIR/scripts/master/master_args.sh
+
 
 sudo echo
 
@@ -13,7 +27,8 @@ sudo echo "${CENTRAL_IP}  ${NODE_NAME}" | sudo tee -a /etc/hosts
 sudo echo $NODE_NAME | sudo tee /etc/hostname
 sudo hostname -F /etc/hostname
 
-./kill_kubernetes.sh
+$MAIN_DIR/scripts/kill_kubernetes.sh
+
 echo -ne "${orange}Removing previous attempts' garbage..."
 sudo rm -rf /etc/kubernetes/manifests/*
 sudo rm -rf /var/lib/etcd
@@ -43,8 +58,8 @@ echo -e "${green}[DONE]${none}"
 echo -e "${orange}Initializing kubernetes pod...${none}"
 sudo kubeadm init --pod-network-cidr=$POD_IP_RANGE --apiserver-advertise-address=$OVERLAY_IP \
         --service-cidr=$SERVICE_IP_RANGE \
-        2>&1 | tee kubeadm.log
-grep "kubeadm join" kubeadm.log | sudo tee kubeadm.log
+        2>&1 | tee $MAIN_DIR/kubeadm.log
+grep "kubeadm join" $MAIN_DIR/kubeadm.log | sudo tee $MAIN_DIR/kubeadm.log
 echo -e "${green}[DONE]${none}"
 
 echo -ne "${orange}Copy config to $HOME/.kube/config...${none}"
@@ -68,11 +83,3 @@ echo -e "${green}Kube-apiserver is UP!${none}"
 echo -e "${orange}Let master run pods too${none}"
 kubectl taint nodes --all node-role.kubernetes.io/master-
 echo -e "${green}[DONE]${none}"
-
-
-
-
-
-
-
-

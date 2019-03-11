@@ -1,9 +1,22 @@
 #!/bin/bash
 
 #this script initializes the kubernetes and docker background for OVN-KUBERNETES
+MAIN_DIR=$1
 
-source minion1_args.sh
-source ovn_config.sh
+if [ -z "$MAIN_DIR"  ]
+then
+  MAIN_DIR="/ovn-k8s/"
+fi
+
+if [ -d $MAIN_DIR ]
+then
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
+          "where you have downloaded the git repository ovn-k8s"
+  exit -1
+fi
+
+source $MAIN_DIR/scripts/ovn_config.sh
+source $MAIN_DIR/scripts/master/minion1_args.sh
 
 sudo echo
 
@@ -15,7 +28,7 @@ sudo echo $NODE_NAME | sudo tee /etc/hostname
 sudo hostname -F /etc/hostname
 
 
-./kill_kubernetes.sh
+sudo $MAIN_DIR/scripts/kill_kubernetes.sh
 
 echo -ne "${orange}Removing previous attempts' gargabe...${none}"
 sudo rm -rf /var/lib/etcd
@@ -50,7 +63,7 @@ echo -ne "${yellow}Waiting for the k8s-master to come up . . ."
 retval=1
 while [ $retval -ne 0 ]
 do
-  sudo scp -o StrictHostKeyChecking=no k8s-master:/users/cslev/ovn-k8s/kubeadm.log ./ &> /dev/null
+  sudo scp -o StrictHostKeyChecking=no k8s-master:$MAIN_DIR/kubeadm.log ./ &> /dev/null
   retval=$?
   echo -ne ". "
   sleep 1s
@@ -63,12 +76,14 @@ echo -ne "${yellow}Waiting for the k8s-master to share the token . . ."
 retval=1
 while [ $retval -ne 0 ]
 do
-  sudo scp -o StrictHostKeyChecking=no k8s-master:/users/cslev/ovn-k8s/token ./ &> /dev/null
+  sudo scp -o StrictHostKeyChecking=no k8s-master:/$MAIN_DIR/token ./ &> /dev/null
   retval=$?
   echo -ne ". "
   sleep 1s
 done
 echo
+
+sudo $(cat $MAIN_DIR/kubeadm.log)
 
 echo -e "${green}------- ALL FINISHED -----"
 
@@ -78,11 +93,3 @@ echo -e "${green}------- ALL FINISHED -----"
 #        "issue that command here!${none}"
 #echo -e "${yellow}${bold}DO NOT forget to have the token as well from the master node!!!${none}"
 #echo -e "${orange}---------------------------------------------------------${none}"
-
-
-
-
-
-
-
-

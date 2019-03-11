@@ -1,7 +1,22 @@
 #!/bin/bash
+MAIN_DIR=$1
 
-source ovn_config.sh
-source master_args.sh
+if [ -z "$MAIN_DIR"  ]
+then
+  MAIN_DIR="/ovn-k8s/"
+fi
+
+if [ -d $MAIN_DIR ]
+then
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
+          "where you have downloaded the git repository ovn-k8s"
+  exit -1
+fi
+
+source $MAIN_DIR/scripts/ovn_config.sh
+source $MAIN_DIR/scripts/master/master_args.sh
+
+
 
 echo -ne "${orange}Create necessary directories if not exist...${none}"
 sudo mkdir -p $OVN_PID_DIR
@@ -89,13 +104,14 @@ echo -e "${green}[DONE]${none}"
 
 
 echo -e "${orange}Create OVNKUBE networking${none}"
-sudo kubectl create -f  ovnkube-rbac.yaml
+sudo kubectl create -f  $MAIN_DIR/scripts/master/ovnkube-rbac.yaml
 echo -e "${green}[DONE]${none}"
 
 # getting secret for the freshly created ovnkube
 SECRET=`kubectl get secret | grep ovnkube | awk '{print $1}'`
 TOKEN=`kubectl get secret/$SECRET -o yaml |grep "token:" | cut -f2  -d ":" | sed 's/^  *//' | base64 -d`
-echo $TOKEN > token
+
+echo $TOKEN > $MAIN_DIR/token
 
 echo -e "${orange}Starting OVNKUBE...${none}"
 sudo ovnkube -net-controller -loglevel=8 \

@@ -1,13 +1,27 @@
 #!/bin/bash
+MAIN_DIR=$1
 
-source ovn_config.sh
+if [ -z "$MAIN_DIR"  ]
+then
+  MAIN_DIR="/ovn-k8s/"
+fi
 
-./ovn_stop_master.sh
+if [ -d $MAIN_DIR ]
+then
+  echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
+          "where you have downloaded the git repository ovn-k8s"
+  exit -1
+fi
 
-cd ovn-kubernetes/go-controller/
-make clean
-cd ../../
-rm -rf ovn-kubernetes
+source $MAIN_DIR/ovn_config.sh
+
+cd $MAIN_DIR
+./ovn_stop.sh
+
+sudo pushd ovn-kubernetes/go-controller/
+sudo make clean
+sudo popd
+sudo rm -rf ovn-kubernetes
 
 
 echo -e "${orange}Stopping kubelet service...${none}"
@@ -82,4 +96,3 @@ sleep 0.5
 sudo rm -rf /opt/cni/bin/
 sleep 0.5
 echo -e "${green}[DONE]${none}"
-

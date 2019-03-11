@@ -72,6 +72,9 @@ bs0 = kube_m.Blockstore('bs0', '/mnt/extra')
 bs0.size = '50GB'
 bs0.placement = 'NONSYSVOL'
 
+#start main script at master
+kube_m.addService(pg.Execute(shell="bash", command="/local/repository/master.sh"))
+
 slave_ifaces = []
 for i in [1, 2]:
     kube_s = request.RawPC('s'+str(i))
@@ -85,10 +88,12 @@ for i in [1, 2]:
     s_iface.component_id="eth1"
     s_iface.addAddress(pg.IPv4Address(ip_address_base + str(ip_address_end), "255.255.255.0"))
     slave_ifaces.append(s_iface)
-    
+
     bs = kube_s.Blockstore('bs'+str(i), '/mnt/extra')
     bs.size = '50GB'
     bs.placement = 'NONSYSVOL'
+
+    kube_s.addService(pg.Execute(shell="bash", command="/local/repository/minion"+str(i)+".sh"))
 
 # Link link-m
 link_m = request.Link('link-0')
@@ -99,4 +104,3 @@ for i in [0, 1]:
 
 # Print the generated rspec
 pc.printRequestRSpec(request)
-
