@@ -2,6 +2,7 @@
 
 #this script initializes the kubernetes and docker background for OVN-KUBERNETES
 MAIN_DIR=$1
+MINION_ID=$2
 
 if [ -z "$MAIN_DIR"  ]
 then
@@ -14,9 +15,15 @@ then
           "where you have downloaded the git repository ovn-k8s"
   exit -1
 fi
-
 source $MAIN_DIR/scripts/ovn_config.sh
-source $MAIN_DIR/scripts/master/minion1_args.sh
+
+if [ -z "$MINION_ID" ]
+then
+  echo -e "${red}MINION_ID as second argument has not been defined! Use 1,2,...,n for setting it properly"
+  exit -1
+fi
+source $MAIN_DIR/scripts/master/minion${MINION_ID}_args.sh
+
 
 sudo echo
 
@@ -63,7 +70,7 @@ echo -ne "${yellow}Waiting for the k8s-master to come up . . ."
 retval=1
 while [ $retval -ne 0 ]
 do
-  sudo scp -o StrictHostKeyChecking=no k8s-master:$MAIN_DIR/kubeadm.log ./ &> /dev/null
+  sudo scp -o StrictHostKeyChecking=no k8s-master:$MAIN_DIR/kubeadm.log $MAIN_DIR/ &> /dev/null
   retval=$?
   echo -ne ". "
   sleep 1s
@@ -76,12 +83,13 @@ echo -ne "${yellow}Waiting for the k8s-master to share the token . . ."
 retval=1
 while [ $retval -ne 0 ]
 do
-  sudo scp -o StrictHostKeyChecking=no k8s-master:/$MAIN_DIR/token ./ &> /dev/null
+  sudo scp -o StrictHostKeyChecking=no k8s-master:/$MAIN_DIR/token $MAIN_DIR/ &> /dev/null
   retval=$?
   echo -ne ". "
   sleep 1s
 done
 echo
+echo -e "${green}TOKEN has been gotten${none}"
 
 sudo $(cat $MAIN_DIR/kubeadm.log)
 

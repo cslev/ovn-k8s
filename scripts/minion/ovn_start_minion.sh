@@ -1,6 +1,7 @@
 #!/bin/bash
 
 MAIN_DIR=$1
+MINION_ID=$2
 
 if [ -z "$MAIN_DIR"  ]
 then
@@ -13,10 +14,15 @@ then
           "where you have downloaded the git repository ovn-k8s"
   exit -1
 fi
-
 source $MAIN_DIR/scripts/ovn_config.sh
-source $MAIN_DIR/scripts/master/minion2_args.sh
 
+
+if [ -z "$MINION_ID" ]
+then
+  echo -e "${red}MINION_ID as second argument has not been defined! Use 1,2,...,N for setting it properly${none}"
+  exit -1
+fi
+source $MAIN_DIR/scripts/master/minion${MINION_ID}_args.sh
 
 echo -ne "${orange}Create necessary directories if not exist...${none}"
 sudo mkdir -p $OVN_PID_DIR
