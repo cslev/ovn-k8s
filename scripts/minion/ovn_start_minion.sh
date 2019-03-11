@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MAIN_DIR=$1
-MINION_ID=$2
+MINION_ID=$1
+MAIN_DIR=$2
 
 if [ -z "$MAIN_DIR"  ]
 then

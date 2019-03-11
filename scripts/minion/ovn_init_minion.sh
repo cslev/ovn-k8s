@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #this script initializes the kubernetes and docker background for OVN-KUBERNETES
-MAIN_DIR=$1
-MINION_ID=$2
+MINION_ID=$1
+MAIN_DIR=$2
 
 if [ -z "$MAIN_DIR"  ]
 then

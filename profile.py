@@ -76,7 +76,7 @@ for i in [1, 2]:
     bs.size = '50GB'
     bs.placement = 'NONSYSVOL'
 
-    kube_s.addService(pg.Execute(shell="bash", command="/local/repository/minion"+str(i)+".sh"))
+    kube_s.addService(pg.Execute(shell="bash", command="/local/repository/minion.sh "+str(i)))
 
 # Link link-m
 link_m = request.Link('link-0')

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-MAIN_DIR=$1
-MINION_ID=$2
+MINION_ID=$1
+MAIN_DIR=$2
+
 if [ -z "$MAIN_DIR"  ]
 then
   MAIN_DIR="/"
@@ -33,10 +34,10 @@ retval=$?
 check_retval $retval
 
 
-sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MAIN_DIR $MINION_ID
+sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR
 retval=$?
 check_retval $retval
 
-sudo $MAIN_DIR/scripts/master/ovn_start_minion.sh $MAIN_DIR $MINION_ID
+sudo $MAIN_DIR/scripts/master/ovn_start_minion.sh $MINION_ID $MAIN_DIR
 retval=$?
 check_retval $retval
