@@ -217,14 +217,14 @@ sudo modprobe openvswitch
 retval=$?
 check_retval $retval
 
-sudo popd
+popd
 
 echo -e "${green} ---- FINISHED ---- ${none}"
 echo -e "${yellow}\n" \
         "----====== ATTENTION ======----"
 echo -e "DO NOT forget to update OVERLAY_IP and \n" \
         "CENTRAL_IP variable to your local IP in \n" \
-	"${bold}master_args.sh${none}${yellow} and" \
+	      "${bold}master_args.sh${none}${yellow} and" \
         "${bold}minion_args.sh${none}${yellow}, respectively,\n" \
-        "if they are not 10.10.0.11 and 10.10.0.12-13!"
+        "if they are not 10.10.0.11 and 10.10.0.12-13!" \
         "----=======================----${none}"

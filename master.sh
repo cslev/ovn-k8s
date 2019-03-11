@@ -24,15 +24,15 @@ source $MAIN_DIR/scripts/ovn_config.sh
 
 
 
-sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR
+sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR >> $MAIN_DIR/logs/bootstrap_output
 retval=$?
 check_retval $retval
 
 
-sudo $MAIN_DIR/scripts/master/ovn_init_master.sh $MAIN_DIR
+sudo $MAIN_DIR/scripts/master/ovn_init_master.sh $MAIN_DIR >> $MAIN_DIR/logs/init_master_output
 retval=$?
 check_retval $retval
 
-sudo $MAIN_DIR/scripts/master/ovn_start_master.sh $MAIN_DIR
+sudo $MAIN_DIR/scripts/master/ovn_start_master.sh $MAIN_DIR >> $MAIN_DIR/logs/start_master_output
 retval=$?
 check_retval $retval
