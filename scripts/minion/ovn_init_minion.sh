@@ -68,7 +68,7 @@ sudo swapoff -a
 echo -e "${green}[DONE]${none}"
 
 
-echo -ne "${yellow}Waiting for the k8s-master to come up . . ."
+echo -ne "${yellow}Waiting for the k8s-master to come up . . . "
 retval=1
 while [ $retval -ne 0 ]
 do
@@ -81,7 +81,7 @@ echo
 
 echo -e "${green}kubeadm join command is ready${none}"
 
-echo -ne "${yellow}Waiting for the k8s-master to share the token . . ."
+echo -ne "${yellow}Waiting for the k8s-master to share the token . . . "
 retval=1
 while [ $retval -ne 0 ]
 do
