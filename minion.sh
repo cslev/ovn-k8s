@@ -43,11 +43,11 @@ retval=$?
 check_retval $retval
 
 
-sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/init_minion_output
+sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/init_minion_output &
 retval=$?
 check_retval $retval
 
-sudo $MAIN_DIR/scripts/minion/ovn_start_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/start_minion_output
+sudo $MAIN_DIR/scripts/minion/ovn_start_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/start_minion_output &
 retval=$?
 check_retval $retval
 

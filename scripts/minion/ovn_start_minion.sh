@@ -122,4 +122,5 @@ else
 
   echo -e "${green}Check the status of k8s-minion node at k8s-master via kubectl get nodes!${none}"
 
+  exit 0
 fi

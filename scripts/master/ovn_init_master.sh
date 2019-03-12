@@ -60,8 +60,8 @@ echo -e "${green}[DONE]${none}"
 echo -e "${orange}Initializing kubernetes pod...${none}"
 sudo kubeadm init --pod-network-cidr=$POD_IP_RANGE --apiserver-advertise-address=$OVERLAY_IP \
         --service-cidr=$SERVICE_IP_RANGE \
-        2>&1 | tee $MAIN_DIR/kubeadm.log
-grep "kubeadm join" $MAIN_DIR/kubeadm.log | sudo tee $MAIN_DIR/kubeadm.log
+        2>&1 | sudo tee $MAIN_DIR/kubeadm.log
+grep "kubeadm join" $MAIN_DIR/kubeadm.log | sudo tee $MAIN_DIR/kubeadm_join
 echo -e "${green}[DONE]${none}"
 
 echo -ne "${orange}Copy config to $HOME/.kube/config...${none}"

@@ -139,3 +139,4 @@ echo -e "${green}Freshesh output log of ovnkube:${none}"
 cat $OVN_LOG_DIR/ovnkube.log
 
 echo
+exit 0
