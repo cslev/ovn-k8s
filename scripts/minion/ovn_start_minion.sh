@@ -97,7 +97,7 @@ else
   sudo pkill ovn-controller
   sudo ovn-controller 2>&1 &
   echo -e "${orange}Restarting OVNKUBE...${none}"
-  sudo ovnkube -loglevel=8 \
+  sudo $OVNKUBE_PATH -loglevel=8 \
                -logfile="${OVN_LOG_DIR}/ovnkube.log" \
                -k8s-apiserver="https://$CENTRAL_IP:6443" \
                -k8s-cacert=/etc/kubernetes/pki/ca.crt \
