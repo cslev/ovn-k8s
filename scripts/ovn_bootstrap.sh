@@ -145,7 +145,7 @@ if [ -d ./ovn-kubernetes ]
 then
   echo -e "${green}[EXISTS...skipping]${none}"
 else
-  echo -e "${orange}ovn-kubernetes does not exists, installing...${none}"
+  echo -e "${orange}ovn-kubernetes does not exist, installing...${none}"
   git clone http://github.com/openvswitch/ovn-kubernetes
   cd $MAIN_DIR/ovn-kubernetes/go-controller
   echo -e "${orange}Compiling go controller...${none}"
