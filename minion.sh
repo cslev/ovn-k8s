@@ -1,33 +1,33 @@
 #!/bin/bash
 
 MINION_ID=$1
-# MAIN_DIR=$2
-#
-# if [ -z "$MAIN_DIR"  ]
-# then
-#   MAIN_DIR="/"
-# fi
-# if [ -d $MAIN_DIR ]
-# then
-#   echo -e "${MAIN_DIR} does not exist! Please specify properly as the first argument " \
-#           "where you have downloaded the git repository ovn-k8s"
-#   exit -1
-# fi
+MAIN_DIR=$2
+if [ -z "$MAIN_DIR"  ]
+then
+  MAIN_DIR="/local/repository"
+fi
+if [ ! -d $MAIN_DIR ]
+then
+  sudo mkdir -p $MAIN_DIR
+fi
 
+cd $MAIN_DIR
 if [ -z "$MINION_ID" ]
 then
   echo -e "${red}MINION_ID as second argument has not been defined! Use 1,2,...,n for setting it properly"
   exit -1
 fi
 
-sudo echo
 
-# sudo cd $MAIN_DIR
+sudo echo
+sudo mkdir -p $MAIN_DIR/logs
+
 
 # sudo git clone http://github.com/cslev/ovn-k8s
-MAIN_DIR=$(pwd)
 date=$(date)
-sudo echo "master.sh has been executed last time on ${date}" >> $MAIN_DIR/log
+sudo echo "minion.sh has been executed last time on ${date}" |sudo tee $MAIN_DIR/logs/log
+sudo echo "and will be installed under ${MAIN_DIR}\n"
+
 source $MAIN_DIR/scripts/ovn_config.sh
 
 
