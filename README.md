@@ -61,6 +61,9 @@ sudo ./minion/ovn_start_minion.sh $MINION_ID /ovn-k8s
 ```
 
 ## DIY mode (lazy)
+These scripts are made for Cloudlab deployment and therefore they might not work out of the box on your setting!
+Handle with care :)
+
 ### @master node:
 $ cd /
 $ sudo git clone https://github.com/cslev/ovn-k8s

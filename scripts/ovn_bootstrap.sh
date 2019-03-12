@@ -219,6 +219,10 @@ check_retval $retval
 
 popd
 
+echo -en "${yellow}Adding new binaries to root's PATH...${none}"
+sudo echo "export PATH=${PATH}" | sudo tee -a /root/.bashrc
+echo -e "${green}[DONE]${none}"
+
 echo -e "${green} ---- FINISHED ---- ${none}"
 echo -e "${yellow}\n" \
         "----====== ATTENTION ======----"

@@ -74,20 +74,20 @@ else
 #  sudo ovn-controller
 
   echo -e "${orange}Starting OVNKUBE...${none}"
-  sudo ovnkube -loglevel=8 \
-               -logfile="${OVN_LOG_DIR}/ovnkube.log" \
-               -k8s-apiserver="https://$CENTRAL_IP:6443" \
-               -k8s-cacert=/etc/kubernetes/pki/ca.crt \
-               -init-node=$NODE_NAME \
-               -nodeport \
-               -nb-address="tcp://${CENTRAL_IP}:6641" \
-               -sb-address="tcp://${CENTRAL_IP}:6642" \
-               -k8s-token="$TOKEN" \
-               -init-gateways \
-               -gateway-interface=$IFNAME \
-               -gateway-nexthop=$GW_IP \
-               -service-cluster-ip-range=$SERVICE_IP_RANGE \
-               -cluster-subnet=$POD_IP_RANGE
+  sudo $OVNKUBE_PATH -loglevel=8 \
+                     -logfile="${OVN_LOG_DIR}/ovnkube.log" \
+                     -k8s-apiserver="https://$CENTRAL_IP:6443" \
+                     -k8s-cacert=/etc/kubernetes/pki/ca.crt \
+                     -init-node=$NODE_NAME \
+                     -nodeport \
+                     -nb-address="tcp://${CENTRAL_IP}:6641" \
+                     -sb-address="tcp://${CENTRAL_IP}:6642" \
+                     -k8s-token="$TOKEN" \
+                     -init-gateways \
+                     -gateway-interface=$IFNAME \
+                     -gateway-nexthop=$GW_IP \
+                     -service-cluster-ip-range=$SERVICE_IP_RANGE \
+                     -cluster-subnet=$POD_IP_RANGE
 #               -k8s-cacert=/etc/kubernetes/pki/ca.crt \
 #               -gateway-localnet 2>&1 &
 #               -net-controller \

@@ -26,7 +26,7 @@ sudo mkdir -p $MAIN_DIR/logs
 # sudo git clone http://github.com/cslev/ovn-k8s
 date=$(date)
 sudo echo "minion.sh has been executed last time on ${date}" |sudo tee $MAIN_DIR/logs/log
-sudo echo "and will be installed under ${MAIN_DIR}\n" |sudo tee $MAIN_DIR/logs/log
+sudo echo "and will be installed under ${MAIN_DIR}\n" |sudo tee -a $MAIN_DIR/logs/log
 
 source $MAIN_DIR/scripts/ovn_config.sh
 

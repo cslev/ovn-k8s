@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GOPATH=/usr/local/
+GOPATH=/usr/local
 sudo mkdir -p /usr/local
 #add GOPATH to PATH
 PATH=$PATH:$GOPATH/go/bin
@@ -11,7 +11,6 @@ PATH=$PATH:$OVN_CTL_PATH
 #add emulab to path (for cloudlab)
 EMULAB=/usr/local/etc/emulab
 PATH=$PATH:$EMULAB
-
 
 # Default directories ovn-ctl script looks for
 OVN_LOG_DIR=/usr/local/var/log/openvswitch
@@ -46,6 +45,17 @@ lightblue='\033[94m'
 pink='\033[95m'
 lightcyan='\033[96m'
 
+#check whether ovnkube is in the path variable and can be executed
+which ovnkube
+retval=$?
+if [ retval -ne 0 ]
+then
+  echo -e "${yellow}ovnkube binary cannot be reached..."
+  echo -e "Falling back to compiled path (${MAIN_DIR}/ovn-kubernetes/go-controller/_output/go/bin/ovnkube)"
+  OVNKUBE_PATH=$MAIN_DIR/ovn-kubernetes/go-controller/_output/go/bin/ovnkube
+else
+  OVNKUBE_PATH=$(which ovnkube)
+fi
 
 check_retval ()
 {
