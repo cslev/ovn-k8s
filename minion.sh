@@ -31,15 +31,15 @@ sudo echo "and will be installed under ${MAIN_DIR}\n" |sudo tee -a $MAIN_DIR/log
 source $MAIN_DIR/scripts/ovn_config.sh
 
 
-sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR >> $MAIN_DIR/logs/bootstrap_output
+sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/bootstrap_output
 retval=$?
 check_retval $retval
 
 
-sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR >> $MAIN_DIR/logs/init_minion_output
+sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/init_minion_output
 retval=$?
 check_retval $retval
 
-sudo $MAIN_DIR/scripts/master/ovn_start_minion.sh $MINION_ID $MAIN_DIR >> $MAIN_DIR/logs/start_minion_output
+sudo $MAIN_DIR/scripts/master/ovn_start_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/start_minion_output
 retval=$?
 check_retval $retval
