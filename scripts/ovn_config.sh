@@ -48,7 +48,7 @@ lightcyan='\033[96m'
 #check whether ovnkube is in the path variable and can be executed
 which ovnkube
 retval=$?
-if [ retval -ne 0 ]
+if [ $retval -ne 0 ]
 then
   echo -e "${yellow}ovnkube binary cannot be reached..."
   echo -e "Falling back to compiled path (${MAIN_DIR}/ovn-kubernetes/go-controller/_output/go/bin/ovnkube)"
