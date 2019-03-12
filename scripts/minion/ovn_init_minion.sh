@@ -72,7 +72,7 @@ echo -ne "${yellow}Waiting for the k8s-master to come up . . . "
 retval=1
 while [ $retval -ne 0 ]
 do
-  sudo scp -o StrictHostKeyChecking=no k8s-master:$MAIN_DIR/kubeadm.log $MAIN_DIR/ &> /dev/null
+  sudo scp -o StrictHostKeyChecking=no k8s-master:$MAIN_DIR/kubeadm.log $MAIN_DIR/kubeadm_join &> /dev/null
   retval=$?
   echo -ne ". "
   sleep 1s
@@ -85,7 +85,7 @@ echo -ne "${yellow}Waiting for the k8s-master to share the token . . . "
 retval=1
 while [ $retval -ne 0 ]
 do
-  sudo scp -o StrictHostKeyChecking=no k8s-master:/$MAIN_DIR/token $MAIN_DIR/kubeadm_join &> /dev/null
+  sudo scp -o StrictHostKeyChecking=no k8s-master:/$MAIN_DIR/token $MAIN_DIR/ &> /dev/null
   retval=$?
   echo -ne ". "
   sleep 1s
