@@ -1,5 +1,4 @@
 #!/bin/bash
-
 MAIN_DIR=$1
 if [ -z "$MAIN_DIR"  ]
 then
@@ -11,6 +10,8 @@ then
 fi
 
 sudo echo
+
+
 
 sudo mkdir -p $MAIN_DIR/logs
 cd $MAIN_DIR
@@ -25,6 +26,12 @@ sudo echo -e "and will be installed under ${MAIN_DIR}\n" | sudo tee -a $MAIN_DIR
 source $MAIN_DIR/scripts/ovn_config.sh
 
 
+sudo echo -e "\n\n${reverse}${red}" \
+"+-------------------------------------------------------+ \n" \
+"|   OVN-K8S master installation is still in progress !  | \n" \
+"|                PLEASE WAIT OR GET BACK LATER!         | \n" \
+"+-------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+
 
 sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR | sudo tee $MAIN_DIR/logs/bootstrap_output
 retval=$?
@@ -38,3 +45,11 @@ check_retval $retval
 sudo $MAIN_DIR/scripts/master/ovn_start_master.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/start_master_output
 retval=$?
 check_retval $retval
+
+sudo echo -e "\n\n${reverse}${green}" \
+"+-----------------------------------------------------------------+ \n" \
+"|   OVN-K8S master installation has been completed !              | \n" \
+"|                            Check logs!                          | \n" \
+"| Check status via:                                               | \n" \
+"| sudo kubectl --kubeconfig=/etc/kubernetes/admin.conf get nodes  | \n" \
+"+-----------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd

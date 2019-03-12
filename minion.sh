@@ -30,6 +30,11 @@ sudo echo -e "and will be installed under ${MAIN_DIR}\n" |sudo tee -a $MAIN_DIR/
 
 source $MAIN_DIR/scripts/ovn_config.sh
 
+sudo echo -e "\n\n${reverse}${red}" \
+"+---------------------------------------------------------+ \n" \
+"|   OVN-K8S minion ${MINION_ID} installation is still in progress !  | \n" \
+"|                PLEASE WAIT OR GET BACK LATER!           | \n" \
+"+---------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
 
 sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/bootstrap_output
 retval=$?
@@ -40,6 +45,14 @@ sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR | sudo tee
 retval=$?
 check_retval $retval
 
-sudo $MAIN_DIR/scripts/master/ovn_start_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/start_minion_output
+sudo $MAIN_DIR/scripts/minion/ovn_start_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/start_minion_output
 retval=$?
 check_retval $retval
+
+sudo echo -e "\n\n${reverse}${green}" \
+"+-------------------------------------------------------------------+ \n" \
+"|   OVN-K8S minion ${MINION_ID} installation has been completed !              | \n" \
+"|                            Check logs!                            | \n" \
+"| Check status @master via:                                         | \n" \
+"| sudo kubectl --kubeconfig=/etc/kubernetes/admin.conf get nodes    | \n" \
+"+-------------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
