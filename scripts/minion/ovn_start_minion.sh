@@ -24,7 +24,7 @@ then
   echo -e "${red}MINION_ID as second argument has not been defined! Use 1,2,...,N for setting it properly${none}"
   exit -1
 fi
-source $MAIN_DIR/scripts/master/minion${MINION_ID}_args.sh
+source $MAIN_DIR/scripts/minion/minion${MINION_ID}_args.sh
 
 echo -ne "${orange}Create necessary directories if not exist...${none}"
 sudo mkdir -p $OVN_PID_DIR
