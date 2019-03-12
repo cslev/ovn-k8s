@@ -12,13 +12,14 @@
 #   exit -1
 # fi
 
-
 sudo echo
 
 
 
 #sudo git clone http://github.com/cslev/ovn-k8s
 MAIN_DIR=$(pwd)
+date=$(date)
+sudo echo "master.sh has been executed last time on ${date}" >> $MAIN_DIR/log 
 # sudo cd $MAIN_DIR
 source $MAIN_DIR/scripts/ovn_config.sh
 
