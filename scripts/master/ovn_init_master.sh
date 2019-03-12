@@ -72,7 +72,7 @@ echo -e "${green}[DONE]${none}"
 
 # Wait till kube-apiserver is up
 while true; do
-    kubectl get node $NODE_NAME
+    kubectl --kubeconfig=/etc/kubernetes/admin.conf get node $NODE_NAME
     if [ $? -eq 0 ]; then
         break
     fi
@@ -83,5 +83,5 @@ echo -e "${green}Kube-apiserver is UP!${none}"
 
 
 echo -e "${orange}Let master run pods too${none}"
-kubectl taint nodes --all node-role.kubernetes.io/master-
+kubectl --kubeconfig=/etc/kubernetes/admin.conf taint nodes --all node-role.kubernetes.io/master-
 echo -e "${green}[DONE]${none}"

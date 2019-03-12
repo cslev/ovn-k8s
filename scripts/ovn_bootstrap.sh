@@ -148,13 +148,13 @@ else
   echo -e "${orange}ovn-kubernetes does not exists, installing...${none}"
   git clone http://github.com/openvswitch/ovn-kubernetes
   cd $MAIN_DIR/ovn-kubernetes/go-controller
-  echo -e "${orange}Compiling...${none}"
+  echo -e "${orange}Compiling go controller...${none}"
   make
   retval=$?
   check_retval $retval
 
-  echo -e "${orange}Installing...${none}"
-  sudo make install
+  echo -e "${orange}Installing go-controller to ${GOPATH}...${none}"
+  sudo -E make install
   retval=$?
   check_retval $retval
 

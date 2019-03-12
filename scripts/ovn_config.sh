@@ -2,8 +2,15 @@
 
 GOPATH=/usr/local/
 sudo mkdir -p /usr/local
-PATH=$PATH:$GOPATH/go/bin/
-PATH=$PATH:/usr/local/share/openvswitch/scripts
+#add GOPATH to PATH
+PATH=$PATH:$GOPATH/go/bin
+#add ovn-ctl
+OVN_CTL_PATH=/usr/local/share/openvswitch/scripts
+PATH=$PATH:$OVN_CTL_PATH
+
+#add emulab to path (for cloudlab)
+EMULAB=/usr/local/etc/emulab
+PATH=$PATH:$EMULAB
 
 
 # Default directories ovn-ctl script looks for
@@ -12,7 +19,7 @@ OVN_PID_DIR=/usr/local/var/run/openvswitch
 OVN_SOCKET_DIR=/usr/local/var/run/openvswitch
 OVN_DB_FILE_DIR=/usr/local/etc/openvswitch
 OVN_DB_SCHEMA_DIR=/usr/local/share/openvswitch
-OVN_CTL=/usr/local/share/openvswitch/scripts/ovn-ctl
+OVN_CTL=$OVN_CTL_PATH/ovn-ctl
 
 #COLORIZING
 none='\033[0m'

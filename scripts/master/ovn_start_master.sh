@@ -106,12 +106,12 @@ echo -e "${green}[DONE]${none}"
 
 
 echo -e "${orange}Create OVNKUBE networking${none}"
-sudo kubectl create -f  $MAIN_DIR/scripts/master/ovnkube-rbac.yaml
+sudo kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f $MAIN_DIR/scripts/master/ovnkube-rbac.yaml
 echo -e "${green}[DONE]${none}"
 
 # getting secret for the freshly created ovnkube
-SECRET=`kubectl get secret | grep ovnkube | awk '{print $1}'`
-TOKEN=`kubectl get secret/$SECRET -o yaml |grep "token:" | cut -f2  -d ":" | sed 's/^  *//' | base64 -d`
+SECRET=`kubectl --kubeconfig=/etc/kubernetes/admin.conf get secret | grep ovnkube | awk '{print $1}'`
+TOKEN=`kubectl --kubeconfig=/etc/kubernetes/admin.conf get secret/$SECRET -o yaml |grep "token:" | cut -f2  -d ":" | sed 's/^  *//' | base64 -d`
 
 echo $TOKEN > $MAIN_DIR/token
 

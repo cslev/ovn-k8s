@@ -19,7 +19,7 @@ cd $MAIN_DIR
 #MAIN_DIR=$(pwd)
 date=$(date)
 sudo echo "master.sh has been executed last time on ${date}" |sudo tee $MAIN_DIR/logs/log
-sudo echo "and will be installed under ${MAIN_DIR}\n"
+sudo echo "and will be installed under ${MAIN_DIR}\n" | sudo tee $MAIN_DIR/logs/log
 
 
 source $MAIN_DIR/scripts/ovn_config.sh
