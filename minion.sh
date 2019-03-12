@@ -31,10 +31,12 @@ sudo echo -e "and will be installed under ${MAIN_DIR}\n" |sudo tee -a $MAIN_DIR/
 source $MAIN_DIR/scripts/ovn_config.sh
 
 sudo echo -e "\n\n${reverse}${red}" \
-"+---------------------------------------------------------+ \n" \
-"|   OVN-K8S minion ${MINION_ID} installation is still in progress !  | \n" \
-"|                PLEASE WAIT OR GET BACK LATER!           | \n" \
-"+---------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
+"+--------------------------------------------------------------+ \n" \
+"|   OVN-K8S minion ${MINION_ID} installation is still in progress !       | \n" \
+"|                PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!  | \n" \
+"|      OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER      | \n" \
+"|                    UNTIL THIS MESSAGE DISAPPEARS             | \n" \
+"+--------------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
 
 sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/bootstrap_output
 retval=$?

@@ -29,7 +29,9 @@ source $MAIN_DIR/scripts/ovn_config.sh
 sudo echo -e "\n\n${reverse}${red}" \
 "+-------------------------------------------------------+ \n" \
 "|   OVN-K8S master installation is still in progress !  | \n" \
-"|                PLEASE WAIT OR GET BACK LATER!         | \n" \
+"|      PLEASE WAIT and CHECK LOGS FOR MORE DETAILS!     | \n" \
+"|  OR IT IS PREFERABLE TO LOGOUT AND LOGIN BACK LATER   | \n" \
+"|               UNTIL THIS MESSAGE DISAPPEARS           | \n" \
 "+-------------------------------------------------------+ ${disable}${none}" | sudo tee  /etc/motd
 
 
