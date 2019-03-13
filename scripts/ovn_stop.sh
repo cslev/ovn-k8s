@@ -22,6 +22,7 @@ sudo pkill ovsdb-server
 sudo pkill ovsdb-server
 sudo pkill ovn-northd
 sudo pkill ovn-controller
+sudo pkill ovnkube
 sudo rm -rf $OVN_PID_DIR
 sudo rm -rf $OVN_DB_FILE_DIR
 sudo rm -rf $OVN_LOG_DIR

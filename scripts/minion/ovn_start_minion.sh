@@ -110,9 +110,9 @@ echo -e "${green}[DONE]${none}"
                -gateway-interface=$IFNAME \
                -gateway-nexthop=$GW_IP \
                -service-cluster-ip-range=$SERVICE_IP_RANGE \
-               -cluster-subnet=$POD_IP_RANGE 2>&1 &
+               -cluster-subnet=$POD_IP_RANGE &
 
-  sleep 3
+  sleep 2
   echo -e "${green}[DONE]${none}"
   echo -e "${green} --- FINISHED --- ${none}"
 
@@ -121,5 +121,3 @@ echo -e "${green}[DONE]${none}"
   sudo tail -n 20 $OVN_LOG_DIR/ovnkube.log
   echo
   echo -e "${green}Check the status of k8s-minion node at k8s-master via kubectl get nodes!${none}"
-
-  exit 0
