@@ -95,7 +95,7 @@ echo -e "${green}[DONE]${none}"
   echo -e "${orange}OVNKUBE (might) have not started properly as ovn-controller does not know where to connect to"
   echo -e "${orange}Restart ovn-controller...${none}"
   sudo pkill ovn-controller
-  sudo ovn-controller 2>&1 &
+  sudo ovn-controller &
   echo -e "${orange}Restarting OVNKUBE...${none}"
   sudo $OVNKUBE_PATH -loglevel=8 \
                -logfile="${OVN_LOG_DIR}/ovnkube.log" \
