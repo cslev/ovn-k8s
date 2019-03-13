@@ -116,7 +116,7 @@ TOKEN=`kubectl --kubeconfig=/etc/kubernetes/admin.conf get secret/$SECRET -o yam
 echo $TOKEN > $MAIN_DIR/token
 
 echo -e "${orange}Starting OVNKUBE...${none}"
-nohup sudo $OVNKUBE_PATH -net-controller -loglevel=8 \
+sudo $OVNKUBE_PATH -net-controller -loglevel=8 \
                    -k8s-apiserver="https://$CENTRAL_IP:6443" \
                    -k8s-cacert=/etc/kubernetes/pki/ca.crt \
                    -k8s-token="$TOKEN" \

@@ -46,7 +46,7 @@ retval=$?
 check_retval $retval
 echo "ovn_init_master.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log
 
-sudo $MAIN_DIR/scripts/master/ovn_start_master.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/start_master_output
+sudo $MAIN_DIR/scripts/master/ovn_start_master.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/start_master_output &
 retval=$?
 check_retval $retval
 echo "ovn_start_master.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log

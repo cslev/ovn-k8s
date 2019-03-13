@@ -73,21 +73,21 @@ echo -e "${green}[DONE]${none}"
 
 
 
-  echo -e "${orange}Starting OVNKUBE...${none}"
-  sudo $OVNKUBE_PATH -loglevel=8 \
-                     -logfile="${OVN_LOG_DIR}/ovnkube.log" \
-                     -k8s-apiserver="https://$CENTRAL_IP:6443" \
-                     -k8s-cacert=/etc/kubernetes/pki/ca.crt \
-                     -init-node=$NODE_NAME \
-                     -nodeport \
-                     -nb-address="tcp://${CENTRAL_IP}:6641" \
-                     -sb-address="tcp://${CENTRAL_IP}:6642" \
-                     -k8s-token="$TOKEN" \
-                     -init-gateways \
-                     -gateway-interface=$IFNAME \
-                     -gateway-nexthop=$GW_IP \
-                     -service-cluster-ip-range=$SERVICE_IP_RANGE \
-                     -cluster-subnet=$POD_IP_RANGE
+echo -e "${orange}Starting OVNKUBE...${none}"
+sudo $OVNKUBE_PATH -loglevel=8 \
+                   -logfile="${OVN_LOG_DIR}/ovnkube.log" \
+                   -k8s-apiserver="https://$CENTRAL_IP:6443" \
+                   -k8s-cacert=/etc/kubernetes/pki/ca.crt \
+                   -init-node=$NODE_NAME \
+                   -nodeport \
+                   -nb-address="tcp://${CENTRAL_IP}:6641" \
+                   -sb-address="tcp://${CENTRAL_IP}:6642" \
+                   -k8s-token="$TOKEN" \
+                   -init-gateways \
+                   -gateway-interface=$IFNAME \
+                   -gateway-nexthop=$GW_IP \
+                   -service-cluster-ip-range=$SERVICE_IP_RANGE \
+                   -cluster-subnet=$POD_IP_RANGE
 #               -k8s-cacert=/etc/kubernetes/pki/ca.crt \
 #               -gateway-localnet 2>&1 &
 #               -net-controller \
@@ -97,7 +97,7 @@ echo -e "${green}[DONE]${none}"
   sudo pkill ovn-controller
   nohup sudo ovn-controller 2>&1 &
   echo -e "${orange}Restarting OVNKUBE...${none}"
-  nohup sudo $OVNKUBE_PATH -loglevel=8 \
+  sudo $OVNKUBE_PATH -loglevel=8 \
                -logfile="${OVN_LOG_DIR}/ovnkube.log" \
                -k8s-apiserver="https://$CENTRAL_IP:6443" \
                -k8s-cacert=/etc/kubernetes/pki/ca.crt \
