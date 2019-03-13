@@ -95,9 +95,9 @@ echo -e "${green}[DONE]${none}"
   echo -e "${orange}OVNKUBE (might) have not started properly as ovn-controller does not know where to connect to"
   echo -e "${orange}Restart ovn-controller...${none}"
   sudo pkill ovn-controller
-  sudo ovn-controller &
+  nohup sudo ovn-controller 2>&1 &
   echo -e "${orange}Restarting OVNKUBE...${none}"
-  sudo $OVNKUBE_PATH -loglevel=8 \
+  nohup sudo $OVNKUBE_PATH -loglevel=8 \
                -logfile="${OVN_LOG_DIR}/ovnkube.log" \
                -k8s-apiserver="https://$CENTRAL_IP:6443" \
                -k8s-cacert=/etc/kubernetes/pki/ca.crt \
@@ -110,7 +110,7 @@ echo -e "${green}[DONE]${none}"
                -gateway-interface=$IFNAME \
                -gateway-nexthop=$GW_IP \
                -service-cluster-ip-range=$SERVICE_IP_RANGE \
-               -cluster-subnet=$POD_IP_RANGE &
+               -cluster-subnet=$POD_IP_RANGE 2>&1 &
 
   sleep 2
   echo -e "${green}[DONE]${none}"
