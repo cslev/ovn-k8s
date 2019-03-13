@@ -26,6 +26,14 @@ then
 fi
 source $MAIN_DIR/scripts/minion/minion${MINION_ID}_args.sh
 
+TOKEN=$(sudo cat $MAIN_DIR/token)
+if [ -z "$TOKEN" ]
+then
+  echo -e "${red}variable TOKEN does not exists! Get token of ovnkube from server and save as a text file called 'token' here!${none}"
+  echo -e "Example: kubectl get secret|grep ovnkube"
+  exit -1
+fi
+
 echo -ne "${orange}Create necessary directories if not exist...${none}"
 sudo mkdir -p $OVN_PID_DIR
 sudo mkdir -p $OVN_DB_FILE_DIR
@@ -63,15 +71,7 @@ echo -e "${orange}Setting SYSTEM_ID in OVS DB...${none}"
 sudo ovs-vsctl set Open_vSwitch . external_ids:system-id="${SYSTEM_ID}"
 echo -e "${green}[DONE]${none}"
 
-TOKEN=$(cat $MAIN_DIR/token)
-if [ -z "$TOKEN" ]
-then
-  echo -e "${red}variable TOKEN does not exists! Get token of ovnkube from server and save as a text file called 'token' here!${none}"
-  echo -e "Example: kubectl get secret|grep ovnkube"
-  exit -1
-else
-#  echo -e "${orange}Starting ovn-controller...${none}"
-#  sudo ovn-controller
+
 
   echo -e "${orange}Starting OVNKUBE...${none}"
   sudo $OVNKUBE_PATH -loglevel=8 \
@@ -119,8 +119,7 @@ else
   echo -e "${green}Freshesh output log of ovnkube:${none}"
 
   sudo tail -n 20 $OVN_LOG_DIR/ovnkube.log
-  echo 
+  echo
   echo -e "${green}Check the status of k8s-minion node at k8s-master via kubectl get nodes!${none}"
 
   exit 0
-fi

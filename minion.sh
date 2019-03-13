@@ -41,15 +41,20 @@ sudo echo -e "\n\n${reverse}${red}" \
 sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/bootstrap_output
 retval=$?
 check_retval $retval
+echo "ovn_bootstrap.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log
 
 
-sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/init_minion_output &
+sudo $MAIN_DIR/scripts/minion/ovn_init_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/init_minion_output
 retval=$?
 check_retval $retval
+echo "ovn_init_minion.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log
 
-sudo $MAIN_DIR/scripts/minion/ovn_start_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/start_minion_output &
+
+sudo $MAIN_DIR/scripts/minion/ovn_start_minion.sh $MINION_ID $MAIN_DIR | sudo tee $MAIN_DIR/logs/start_minion_output
 retval=$?
 check_retval $retval
+echo "ovn_start_minion.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log
+
 
 sudo echo -e "\n\n${reverse}${green}" \
 "+-------------------------------------------------------------------+ \n" \
