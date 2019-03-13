@@ -136,7 +136,7 @@ echo -e "${green} --- FINISHED --- ${none}"
 
 echo -e "${green}Freshesh output log of ovnkube:${none}"
 
-cat $OVN_LOG_DIR/ovnkube.log
+sudo tail -n 20 $OVN_LOG_DIR/ovnkube.log
 
 echo
 exit 0

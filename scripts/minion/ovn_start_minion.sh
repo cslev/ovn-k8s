@@ -119,7 +119,7 @@ else
   echo -e "${green}Freshesh output log of ovnkube:${none}"
 
   sudo tail -n 20 $OVN_LOG_DIR/ovnkube.log
-
+  echo 
   echo -e "${green}Check the status of k8s-minion node at k8s-master via kubectl get nodes!${none}"
 
   exit 0
