@@ -111,7 +111,8 @@ sudo apt-get update
 echo -e "${green}[DONE]${none}"
 
 echo -e "${orange}Installing docker...${none}"
-sudo apt-get install -y linux-image-extra-virtual docker-engine
+#sudo apt-get install -y linux-image-extra-virtual docker-engine
+sudo apt-get install -y linux-image-extra-virtual docker.io
 sudo service docker start
 echo -e "${green}[DONE]${none}"
 
