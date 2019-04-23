@@ -67,8 +67,8 @@ check_retval ()
     echo -e "${bold}${red}Something went wrong during the installation process..."
     echo -e "Check logs for more details!"
     echo -e "EXITING${none}"
-    sudo echo -e "${reverse}${red}" \
-    "\n\nSOMETHING WENT WRONG DURING THE INSTALLATION PROCESS...\n" \
+    sudo echo -e "\n\n${reverse}${red}" \
+    "SOMETHING WENT WRONG DURING THE INSTALLATION PROCESS...\n" \
     "CHECK LOGS FOR MORE DETAILS!${disable}${none}" | sudo tee -a /etc/motd
     exit -1
   else
