@@ -65,7 +65,11 @@ check_retval ()
   if [ $retval -ne 0 ]
   then
     echo -e "${bold}${red}Something went wrong during the installation process..."
+    echo -e "Check logs for more details!"
     echo -e "EXITING${none}"
+    sudo echo -e "\n\n${reverse}${red}" \
+    "\n\nSOMETHING WENT WRONG DURING THE INSTALLATION PROCESS...\n" \
+    "CHECK LOGS FOR MORE DETAILS!${disable}${none}" | sudo tee -a /etc/motd
     exit -1
   else
     echo -e "${green}[DONE]${none}"
