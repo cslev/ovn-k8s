@@ -21,10 +21,11 @@ fi
 
 sudo echo
 
-USERNAME=$(whoami)
 echo "source $MAIN_DIR/scripts/ovn_config.sh" >> /root/.bashrc
-echo "source $MAIN_DIR/scripts/ovn_config.sh" >> /users/$USERNAME/.bashrc
-
+for USERNAME in $(ls /users/)
+do
+  echo "source $MAIN_DIR/scripts/ovn_config.sh" >> /users/$USERNAME/.bashrc
+done
 sudo mkdir -p $MAIN_DIR/logs
 
 
