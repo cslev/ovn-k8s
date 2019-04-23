@@ -50,7 +50,7 @@ sudo apt-get install -y gcc \
                         libssl1.0.0 \
                         libssl1.1 \
                         libcap-ng-dev \
-                https://dl.google.com/go/go1.11.9.linux-amd64.tar.gz        libcapnp-dev \
+                        libcapnp-dev \
                         libcap-ng-utils \
                         libcap-ng0 \
                         python \
