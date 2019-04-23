@@ -53,7 +53,7 @@ retval=$?
 if [ $retval -ne 0 -a -z "$OVNKUBE_PATH" ]
 then
   echo -e "${yellow}ovnkube binary cannot be found..."
-  echo -e "Falling back to compiled path (${MAIN_DIR}/ovn-kubernetes/go-controller/_output/go/bin/ovnkube)"
+  echo -e "Falling back to compiled path (${MAIN_DIR}/ovn-kubernetes/go-controller/_output/go/bin/ovnkube)${none}"
   OVNKUBE_PATH=$MAIN_DIR/ovn-kubernetes/go-controller/_output/go/bin/ovnkube
 else
   OVNKUBE_PATH=$(which ovnkube)
@@ -67,7 +67,7 @@ check_retval ()
     echo -e "${bold}${red}Something went wrong during the installation process..."
     echo -e "Check logs for more details!"
     echo -e "EXITING${none}"
-    sudo echo -e "\n\n${reverse}${red}" \
+    sudo echo -e "${reverse}${red}" \
     "\n\nSOMETHING WENT WRONG DURING THE INSTALLATION PROCESS...\n" \
     "CHECK LOGS FOR MORE DETAILS!${disable}${none}" | sudo tee -a /etc/motd
     exit -1

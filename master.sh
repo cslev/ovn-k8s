@@ -12,12 +12,6 @@ fi
 sudo echo
 
 
-echo "source $MAIN_DIR/scripts/ovn_config.sh" >> /root/.bashrc
-for USERNAME in $(ls /users/)
-do
-  echo "source $MAIN_DIR/scripts/ovn_config.sh" >> /users/$USERNAME/.bashrc
-done
-
 sudo mkdir -p $MAIN_DIR/logs
 cd $MAIN_DIR
 
@@ -43,17 +37,29 @@ sudo echo -e "\n\n${reverse}${red}" \
 sudo $MAIN_DIR/scripts/ovn_bootstrap.sh $MAIN_DIR | sudo tee $MAIN_DIR/logs/bootstrap_output
 retval=$PIPESTATUS[0]
 check_retval $retval
+if [ $retval -ne 0 ]
+then
+  exit -1
+fi
 echo "ovn_bootstrap.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log
 
 
 sudo $MAIN_DIR/scripts/master/ovn_init_master.sh $MAIN_DIR | sudo tee $MAIN_DIR/logs/init_master_output
 retval=$PIPESTATUS[0]
 check_retval $retval
+if [ $retval -ne 0 ]
+then
+  exit -1
+fi
 echo "ovn_init_master.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log
 
 sudo $MAIN_DIR/scripts/master/ovn_start_master.sh $MAIN_DIR |sudo tee $MAIN_DIR/logs/start_master_output &
 retval=$PIPESTATUS[0]
 check_retval $retval
+if [ $retval -ne 0 ]
+then
+  exit -1
+fi
 echo "ovn_start_master.sh has successfully finished!" | sudo tee -a $MAIN_DIR/logs/log
 
 

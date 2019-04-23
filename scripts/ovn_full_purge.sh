@@ -19,9 +19,9 @@ source $MAIN_DIR/scripts/ovn_config.sh
 cd $MAIN_DIR
 ./scripts/ovn_stop.sh
 
-sudo pushd ovn-kubernetes/go-controller/
+pushd ovn-kubernetes/go-controller/
 sudo make clean
-sudo popd
+popd
 sudo rm -rf ovn-kubernetes
 
 
