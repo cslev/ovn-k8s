@@ -206,8 +206,14 @@ check_retval $retval
 
 popd
 
-echo -en "${yellow}Adding new binaries to root's PATH...${none}"
+echo -en "${yellow}Adding new binaries to root's PATH and create alias for kubectl to always include the --kubeconfig=/etc/kubernetes/admin.conf${none}"
 sudo echo "export PATH=${PATH}" | sudo tee -a /root/.bashrc
+sudo echo "alias kubectl='kubectl --kubeconfig=/etc/kubernetes/admin.conf'" | sudo tee -a /root/.bashrc
+for USERNAME in $(ls /users/)
+do
+  sudo echo "export PATH=${PATH}" | sudo tee -a /users/$USERNAME/.bashrc
+  sudo echo "alias kubectl='kubectl --kubeconfig=/etc/kubernetes/admin.conf'" | sudo tee -a /users/$USERNAME/.bashrc
+done
 echo -e "${green}[DONE]${none}"
 
 echo -e "${green} ---- FINISHED ---- ${none}"
