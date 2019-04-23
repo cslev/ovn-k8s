@@ -50,7 +50,7 @@ sudo apt-get install -y gcc \
                         libssl1.0.0 \
                         libssl1.1 \
                         libcap-ng-dev \
-                        libcapnp-dev \
+                https://dl.google.com/go/go1.11.9.linux-amd64.tar.gz        libcapnp-dev \
                         libcap-ng-utils \
                         libcap-ng0 \
                         python \
@@ -70,15 +70,15 @@ check_retval $retval
 
 
 echo -e "${orange}Installing golang...${none}"
-if [ -f go1.11.1.linux-amd64.tar.gz ]
+if [ -f go1.11.9.linux-amd64.tar.gz ]
 then
-  echo -e "${green}Compressed archive of go1.11.1 is already downloaded...${none}"
+  echo -e "${green}Compressed archive of go1.11.9 is already downloaded...${none}"
 else
-  wget https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz -O $MAIN_DIR/go1.11.1.linux-amd64.tar.gz
+  wget https://dl.google.com/go/go1.11.9.linux-amd64.tar.gz -O $MAIN_DIR/go1.11.9.linux-amd64.tar.gz
   retval=$?
   check_retval $retval
 fi
-sudo tar -C $GOPATH -xzf $MAIN_DIR/go1.11.1.linux-amd64.tar.gz
+sudo tar -C $GOPATH -xzf $MAIN_DIR/go1.11.9.linux-amd64.tar.gz
 retval=$?
 check_retval $retval
 
