@@ -20,6 +20,11 @@ fi
 
 
 sudo echo
+
+USERNAME=$(whoami)
+echo "source $MAIN_DIR/scripts/ovn_config.sh" >> /root/.bashrc
+echo "source $MAIN_DIR/scripts/ovn_config.sh" >> /users/$USERNAME/.bashrc
+
 sudo mkdir -p $MAIN_DIR/logs
 
 
