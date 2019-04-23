@@ -19,20 +19,6 @@ fi
 source $MAIN_DIR/scripts/ovn_config.sh
 
 
-check_retval ()
-{
-  retval=$1
-  if [ $retval -ne 0 ]
-  then
-    echo -e "${bold}${red}Something went wrong during the installation process..."
-    echo -e "EXITING${none}"
-    exit -1
-  else
-    echo -e "${green}[DONE]${none}"
-  fi
-
-}
-
 sudo echo
 
 
@@ -69,16 +55,17 @@ retval=$?
 check_retval $retval
 
 
+GOVERSION=1.11.9
 echo -e "${orange}Installing golang...${none}"
-if [ -f go1.12.4.linux-amd64.tar.gz ]
+if [ -f go$GOVERSION.linux-amd64.tar.gz ]
 then
-  echo -e "${green}Compressed archive of go1.12.4 is already downloaded...${none}"
+  echo -e "${green}Compressed archive of go${GOVERSION} is already downloaded...${none}"
 else
-  wget https://dl.google.com/go/go1.12.4.linux-amd64.tar.gz -O $MAIN_DIR/go1.12.4.linux-amd64.tar.gz
+  wget https://dl.google.com/go/go$GOVERSION.linux-amd64.tar.gz -O $MAIN_DIR/go$GOVERSION.linux-amd64.tar.gz
   retval=$?
   check_retval $retval
 fi
-sudo tar -C $GOPATH -xzf $MAIN_DIR/go1.12.4.linux-amd64.tar.gz
+sudo tar -C $GOPATH -xzf $MAIN_DIR/go$GOVERSION.linux-amd64.tar.gz
 retval=$?
 check_retval $retval
 
