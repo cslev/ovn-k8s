@@ -65,6 +65,7 @@ These scripts are made for Cloudlab deployment and therefore they might not work
 Handle with care :)
 
 ### @master node:
+```
 $ cd /
 $ sudo git clone https://github.com/cslev/ovn-k8s
 $ sudo cd ovn-k8s
@@ -77,5 +78,4 @@ $ cd /
 $ sudo git clone https://github.com/cslev/ovn-k8s
 $ sudo cd ovn-k8s
 $ sudo ./minion.sh $MINION_ID /ovn-k8s
-
 ```
