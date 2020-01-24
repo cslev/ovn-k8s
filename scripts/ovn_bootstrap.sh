@@ -57,8 +57,8 @@ check_retval $retval
 
 
 # GOVERSION=1.11.9
-# GOVERSION=1.12.4
-GOVERSION=1.11.1
+GOVERSION=1.12.4
+#GOVERSION=1.11.1
 echo -e "${orange}Installing golang...${none}"
 if [ -f go$GOVERSION.linux-amd64.tar.gz ]
 then
